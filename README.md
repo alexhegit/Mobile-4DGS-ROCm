@@ -4,7 +4,7 @@
 <h5 align="center">
 
 [![project](https://img.shields.io/badge/Webpage-blue)](https://xiaobiaodu.github.io/mobile-4dgs-project/)
-[![arXiv](https://img.shields.io/badge/Arxiv-2603.11531-b31b1b.svg?logo=arXiv)](https://arxiv.org/pdf/2606.30017)
+[![arXiv](https://img.shields.io/badge/Arxiv-2603.11531-b31b1b.svg?logo=arXiv)](https://arxiv.org/abs/2610.05289)
 
 
 
@@ -125,6 +125,16 @@ This work is built on many amazing research works and open-source projects, than
       author={Xiaobiao Du and Yuan Wang, and Hao Li, and Bosheng wang, and Xun Sun,  and Xin Yu},
   booktitle={European Conference on Computer Vision (ECCV)},
   year={2026}
+}
+
+@misc{du2026mobile4dgs,
+      title={Mobile-4DGS: Unified Static-Dynamic Real-time Mobile Gaussian Splatting}, 
+      author={Xiaobiao Du and Zhen Fang and Tianqing Zhu and Richard Hartley and Xin Yu},
+      year={2026},
+      eprint={2610.05289},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.05289}, 
 }
 
 ```
