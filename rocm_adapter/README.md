@@ -30,7 +30,7 @@ maps 1:1 onto FluxGS's Inria-convention renderer:
 |---|---|
 | `means3D (N,3)` | `means (1,N,3)` |
 | `quats (N,4)` (wxyz) | `quats (1,N,4)` (wxyz) — already wxyz ✓ |
-| `scaling` (exp-space) | `scales = log(scaling)` — one log, done |
+| `scaling` (exp-space) | `scales = scaling` — pass through as raw linear scales |
 | `colors_precomp (N,3)` | `colors (1,N,3)` |
 | `opacities (N,)` | `opacities (1,N,)` |
 | `viewmatrix 4x4 (w2c)` | stacked into `viewmats (1,1,4,4)` |

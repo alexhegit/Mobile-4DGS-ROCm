@@ -83,7 +83,7 @@ The API translation (per call):
 |---|---|
 | `means3D (N,3)` | `means (1,N,3)` |
 | `rotations (N,4)` w-first | `quats (1,N,4)` w-first — identical |
-| `scales (N,3)` **exp-space** | `scales (1,N,3)` **log-space** → adapter does `log(scales) + log(scale_modifier)` |
+| `scales (N,3)` **raw linear** scales (Inria/FluxGS pass `exp(_scaling)`; the Inria CUDA kernel takes raw linear scales) | `scales (1,N,3)` **raw linear** — pass through unchanged. ⚠ This ROCm gsplat wheel (1.5.3, pypi.amd.com) consumes **raw linear** scales, NOT the log-space expected by the *upstream gsplat CUDA build* (which does `exp` inside the kernel). Empirically verified: scale 0.05 → 10 px blob, 0.5 → 99 px (3×σ) at f=128/z=2; log-space input (-3) → full-frame smear. Do NOT `log()` here. |
 | `opacities (N,)` | `opacities (1,N)` |
 | `colors_precomp (N,3)` / `shs` | `colors (1,N,3)` / SH via `sh_degree` |
 | `viewmatrix 4x4` (w→c) | `viewmats (1,1,4,4)` |
