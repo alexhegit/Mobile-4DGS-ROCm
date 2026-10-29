@@ -77,10 +77,15 @@ def _rasterize(means3D, scales, rotations, opacities, colors, rs, use_sh=False, 
     """
     device = means3D.device
     N = means3D.shape[0]
-    log_sm = math.log(rs.scale_modifier) if rs.scale_modifier not in (1.0, 0.0) else 0.0
-    # CONVENTION: FluxGS passes exp(_scaling) (Inria rasterizer convention);
-    # gsplat expects LOG-scales (it applies exp inside the kernel).
-    scales_in = torch.log(scales) + log_sm
+    sm = rs.scale_modifier if rs.scale_modifier not in (0.0,) else 1.0
+    # CONVENTION: FluxGS/Inria rasterizer consumes RAW (linear) scales in world units.
+    # This ROCm gsplat kernel (1.5.3) also consumes RAW linear scales, not log-space —
+    # verified empirically by rendering a single gaussian at fixed focal length (see
+    # probe4.py in the scratch dir): scale=0.05 → 10 px blob, scale=0.5 → 99 px blob,
+    # monotone, linear-ish in log-space of scale.  Passing `torch.log(scales)` (as the
+    # upstream gsplat Python API does for *their* CUDA build) would make this kernel
+    # treat 0.03 as log(0.03)≈-3.5, i.e. ~10^5× magnification → full-frame smear.
+    scales_in = scales * sm
 
     means_b = means3D.view(1, N, 3)
     quats_b = rotations.view(1, N, 4)
